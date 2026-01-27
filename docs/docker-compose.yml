@@ -1,0 +1,106 @@
+version: '3.8'
+
+# =============================================================================
+# Local AI Coding Assistant Stack
+# Optimized for: RTX 3060 12GB + 64GB RAM
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # Ollama - LLM Inference Engine
+  # ---------------------------------------------------------------------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_NUM_PARALLEL=2
+      - OLLAMA_MAX_LOADED_MODELS=1
+      - OLLAMA_FLASH_ATTENTION=1
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # Open WebUI - Chat Interface (seperti Claude AI)
+  # ---------------------------------------------------------------------------
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    depends_on:
+      ollama:
+        condition: service_healthy
+    volumes:
+      - open-webui-data:/app/backend/data
+      - ./uploads:/app/backend/data/uploads  # For document uploads
+    ports:
+      - "3000:8080"
+    environment:
+      # Ollama Connection
+      - OLLAMA_BASE_URL=http://ollama:11434
+      
+      # Authentication (set to true for multi-user)
+      - WEBUI_AUTH=false
+      
+      # RAG Settings
+      - ENABLE_RAG_WEB_SEARCH=true
+      - RAG_EMBEDDING_MODEL=nomic-embed-text
+      - RAG_EMBEDDING_MODEL_AUTO_UPDATE=true
+      - CHUNK_SIZE=1500
+      - CHUNK_OVERLAP=100
+      
+      # UI Customization
+      - WEBUI_NAME=Local Coding AI
+      - DEFAULT_MODELS=qwen2.5-coder:14b
+      - MODEL_FILTER_ENABLED=false
+      
+      # Performance
+      - ENABLE_WEBSOCKET_SUPPORT=true
+      - WEBSOCKET_MANAGER=redis
+      
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Redis - For session management & caching (optional but recommended)
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  ollama_data:
+    driver: local
+  open-webui-data:
+    driver: local
+  redis_data:
+    driver: local
+
+# =============================================================================
+# Networks (optional - for isolation)
+# =============================================================================
+networks:
+  default:
+    name: local-ai-network

@@ -1,0 +1,91 @@
+# =============================================================================
+# Modelfile: Coding Assistant
+# Base: Qwen2.5-Coder-14B
+# Optimized for: RTX 3060 12GB VRAM
+# =============================================================================
+
+FROM qwen2.5-coder:14b
+
+# -----------------------------------------------------------------------------
+# System Prompt - Defines AI personality and capabilities
+# -----------------------------------------------------------------------------
+SYSTEM """Anda adalah asisten coding AI senior yang sangat ahli. Anda membantu developer dengan:
+
+🔹 **Menulis Kode**
+- Kode yang bersih, efisien, dan well-documented
+- Mengikuti best practices dan design patterns
+- Proper error handling dan edge cases
+
+🔹 **Debugging & Troubleshooting**
+- Analisis error dengan detail
+- Memberikan solusi step-by-step
+- Menjelaskan root cause masalah
+
+🔹 **Code Review & Optimization**
+- Review untuk bugs, security issues, dan performance
+- Saran refactoring dan improvement
+- Penjelasan trade-offs dari berbagai approach
+
+🔹 **Penjelasan Konsep**
+- Menjelaskan konsep kompleks dengan bahasa sederhana
+- Memberikan contoh dan analogi yang relevan
+- Documentation yang jelas
+
+**Response Guidelines:**
+- Gunakan code blocks dengan syntax highlighting
+- Struktur response dengan jelas
+- Berikan penjelasan untuk setiap bagian penting
+- Pertimbangkan context dan kebutuhan user
+- Jika tidak yakin, tanyakan klarifikasi
+
+**Bahasa:** Respons dalam bahasa yang sama dengan pertanyaan user (Indonesia/English)."""
+
+# -----------------------------------------------------------------------------
+# Model Parameters - Optimized for coding tasks
+# -----------------------------------------------------------------------------
+
+# Temperature: Lower = more deterministic/consistent code
+PARAMETER temperature 0.2
+
+# Top P (nucleus sampling): Balances creativity vs consistency
+PARAMETER top_p 0.9
+
+# Top K: Limits vocabulary for more focused responses
+PARAMETER top_k 40
+
+# Context Length: 32K tokens (optimal for 12GB VRAM)
+# Increase to 65536 if you have headroom, decrease to 16384 if OOM
+PARAMETER num_ctx 32768
+
+# Repeat Penalty: Prevents repetitive code patterns
+PARAMETER repeat_penalty 1.1
+
+# Stop Sequences
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|im_start|>"
+
+# Mirostat: Adaptive sampling (0=disabled, 1=mirostat, 2=mirostat2)
+PARAMETER mirostat 0
+
+# Number of tokens to predict (-1 = infinite, until stop token)
+PARAMETER num_predict -1
+
+# -----------------------------------------------------------------------------
+# Template - Chat format for Qwen models
+# -----------------------------------------------------------------------------
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ .Response }}<|im_end|>
+"""
+
+# -----------------------------------------------------------------------------
+# License
+# -----------------------------------------------------------------------------
+LICENSE """
+Qwen2.5-Coder is licensed under Apache 2.0.
+This Modelfile customization is provided as-is for personal use.
+"""
