@@ -1,0 +1,134 @@
+{
+  "models": [
+    {
+      "title": "Qwen Coder 14B",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:14b",
+      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "contextLength": 32768,
+      "completionOptions": {
+        "temperature": 0.2,
+        "topP": 0.9
+      }
+    },
+    {
+      "title": "DeepSeek R1 (Reasoning)",
+      "provider": "ollama",
+      "model": "deepseek-r1:14b",
+      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "contextLength": 32768,
+      "completionOptions": {
+        "temperature": 0.3
+      }
+    },
+    {
+      "title": "Qwen Coder 7B (Fast)",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:7b",
+      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "contextLength": 32768,
+      "completionOptions": {
+        "temperature": 0.2
+      }
+    },
+    {
+      "title": "Coding Assistant (Custom)",
+      "provider": "ollama",
+      "model": "coding-assistant",
+      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "contextLength": 32768
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Autocomplete",
+    "provider": "ollama",
+    "model": "qwen2.5-coder:7b",
+    "apiBase": "http://VM_IP_ADDRESS:11434"
+  },
+  "embeddingsProvider": {
+    "provider": "ollama",
+    "model": "nomic-embed-text",
+    "apiBase": "http://VM_IP_ADDRESS:11434"
+  },
+  "contextProviders": [
+    {
+      "name": "code",
+      "params": {}
+    },
+    {
+      "name": "docs",
+      "params": {}
+    },
+    {
+      "name": "diff",
+      "params": {}
+    },
+    {
+      "name": "terminal",
+      "params": {}
+    },
+    {
+      "name": "problems",
+      "params": {}
+    },
+    {
+      "name": "folder",
+      "params": {}
+    },
+    {
+      "name": "codebase",
+      "params": {}
+    }
+  ],
+  "slashCommands": [
+    {
+      "name": "edit",
+      "description": "Edit selected code"
+    },
+    {
+      "name": "comment",
+      "description": "Add comments to code"
+    },
+    {
+      "name": "share",
+      "description": "Export chat to markdown"
+    },
+    {
+      "name": "cmd",
+      "description": "Generate terminal command"
+    },
+    {
+      "name": "commit",
+      "description": "Generate commit message"
+    }
+  ],
+  "customCommands": [
+    {
+      "name": "review",
+      "description": "Review code for bugs, security, and best practices",
+      "prompt": "Review this code for:\n1. Bugs and potential issues\n2. Security vulnerabilities\n3. Performance optimizations\n4. Best practices\n\nProvide specific suggestions with code examples."
+    },
+    {
+      "name": "explain",
+      "description": "Explain code in detail",
+      "prompt": "Explain this code in detail:\n1. What does it do?\n2. How does it work step by step?\n3. What are the key concepts used?\n4. Are there any edge cases to consider?"
+    },
+    {
+      "name": "test",
+      "description": "Generate unit tests",
+      "prompt": "Generate comprehensive unit tests for this code using pytest (Python) or jest (JavaScript/TypeScript). Include:\n1. Happy path tests\n2. Edge cases\n3. Error handling tests\n4. Mocking if needed"
+    },
+    {
+      "name": "refactor",
+      "description": "Suggest refactoring improvements",
+      "prompt": "Suggest refactoring improvements for this code:\n1. Code organization\n2. Design patterns that could be applied\n3. Ways to improve readability\n4. Performance optimizations\n\nProvide the refactored code with explanations."
+    },
+    {
+      "name": "document",
+      "description": "Add documentation",
+      "prompt": "Add comprehensive documentation to this code:\n1. Module/file level docstring\n2. Function/method docstrings with args, returns, raises\n3. Inline comments for complex logic\n4. Type hints if missing"
+    }
+  ],
+  "docs": [],
+  "allowAnonymousTelemetry": false
+}
