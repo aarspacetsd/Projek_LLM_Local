@@ -41,6 +41,59 @@ def print_banner():
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def check_root():
+    if os.geteuid() != 0:
+        print(f"{RED}This script must be run as root. Please use sudo.{NC}")
+        sys.exit(1)
+
+def check_ubuntu():
+    try:
+        with open('/etc/os-release', 'r') as f:
+            for line in f:
+                if line.startswith('ID='):
+                    if 'ubuntu' not in line.lower():
+                        print(f"{RED}This script is intended for Ubuntu. Exiting.{NC}")
+                        sys.exit(1)
+    except FileNotFoundError:
+        print(f"{RED}Could not find /etc/os-release file. Exiting.{NC}")
+        sys.exit(1)
+
+def install_prerequisites():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Installing prerequisites...{NC}")
+
+def install_nvidia_driver():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Installing NVIDIA driver...{NC}")
+
+def install_docker():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Installing Docker...{NC}")
+
+def install_nvidia_container_toolkit():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Installing NVIDIA Container Toolkit...{NC}")
+
+def install_ollama():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Installing Ollama...{NC}")
+
+def download_models():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Downloading AI models...{NC}")
+
+def setup_services():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Setting up services...{NC}")
+
+def install_tools_and_helpers():
+    # Placeholder for actual installation logic
+    print(f"{GREEN}Installing tools and creating helper scripts...{NC}")
+
+def print_summary():
+    # Placeholder for actual summary logic
+    print(f"{CYAN}Installation complete.{NC}")
+
 # -----------------------------------------------------------------------------
 # Main
 # -----------------------------------------------------------------------------
