@@ -4,7 +4,7 @@
       "title": "Qwen Coder 14B",
       "provider": "ollama",
       "model": "qwen2.5-coder:14b",
-      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "apiBase": "http://100.66.90.63:11434",
       "contextLength": 32768,
       "completionOptions": {
         "temperature": 0.2,
@@ -15,7 +15,7 @@
       "title": "DeepSeek R1 (Reasoning)",
       "provider": "ollama",
       "model": "deepseek-r1:14b",
-      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "apiBase": "http://100.66.90.63:11434",
       "contextLength": 32768,
       "completionOptions": {
         "temperature": 0.3
@@ -25,7 +25,7 @@
       "title": "Qwen Coder 7B (Fast)",
       "provider": "ollama",
       "model": "qwen2.5-coder:7b",
-      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "apiBase": "http://100.66.90.63:11434",
       "contextLength": 32768,
       "completionOptions": {
         "temperature": 0.2
@@ -35,7 +35,7 @@
       "title": "Coding Assistant (Custom)",
       "provider": "ollama",
       "model": "coding-assistant",
-      "apiBase": "http://VM_IP_ADDRESS:11434",
+      "apiBase": "http://100.66.90.63:11434",
       "contextLength": 32768
     }
   ],
@@ -43,12 +43,12 @@
     "title": "Autocomplete",
     "provider": "ollama",
     "model": "qwen2.5-coder:7b",
-    "apiBase": "http://VM_IP_ADDRESS:11434"
+    "apiBase": "http://100.66.90.63:11434"
   },
   "embeddingsProvider": {
     "provider": "ollama",
     "model": "nomic-embed-text",
-    "apiBase": "http://VM_IP_ADDRESS:11434"
+    "apiBase": "http://100.66.90.63:11434"
   },
   "contextProviders": [
     {
